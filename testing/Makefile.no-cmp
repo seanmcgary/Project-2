@@ -1,0 +1,86 @@
+#
+# Test programs for SP1 project 2 functions
+#
+# This Makefile assumes that add_to_cust_list() and add_to_part_list()
+# do NOT need the corresponding cmp_cust() and cmp_part() functions.
+#
+ALLOCDIR =	/usr/local/pub/wrc/courses/sp1/allocate
+P2DIR =		/usr/local/pub/wrc/courses/sp1/project2
+CC =		gcc
+AS =		as
+CFLAGS =	-ggdb -std=c99 -I$(ALLOCDIR)
+LIBFLAGS =	-L$(P2DIR) -lproject2 -L$(ALLOCDIR) -lallocate-ubuntu86
+CLIBFLAGS =	$(LIBFLAGS)
+
+all:	test_add_cust test_cmp_cust test_find_cust test_new_cust \
+	test_add_part test_cmp_part test_find_part test_new_part
+
+run:	all
+	./test_add_cust
+	./test_cmp_cust
+	./test_find_cust
+	./test_new_cust
+	./test_add_part
+	./test_cmp_part
+	./test_find_part
+	./test_new_part
+
+test_add_cust:	test_add_cust.o add_to_cust_list.o customers.o
+	$(CC) $(CFLAGS) -o test_add_cust test_add_cust.o add_to_cust_list.o \
+		customers.o $(CLIBFLAGS)
+
+add_to_cust_list.o:	add_to_cust_list.s
+	$(AS) --gstabs $< -o $@
+
+test_cmp_cust:	test_cmp_cust.o cmp_cust.o customers.o
+	$(CC) $(CFLAGS) -o test_cmp_cust test_cmp_cust.o cmp_cust.o \
+		customers.o $(CLIBFLAGS)
+
+cmp_cust.o:	cmp_cust.s
+	$(AS) --gstabs $< -o $@
+
+test_find_cust:	test_find_cust.o find_cust.o customers.o
+	$(CC) $(CFLAGS) -o test_find_cust test_find_cust.o find_cust.o \
+		customers.o $(CLIBFLAGS)
+
+find_cust.o:	find_cust.s
+	$(AS) --gstabs $< -o $@
+
+test_new_cust:	test_new_cust.o new_cust.o customers.o
+	$(CC) $(CFLAGS) -o test_new_cust test_new_cust.o new_cust.o \
+		customers.o $(CLIBFLAGS)
+
+new_cust.o:	new_cust.s
+	$(AS) --gstabs $< -o $@
+
+test_add_part:	test_add_part.o add_to_part_list.o parts.o
+	$(CC) $(CFLAGS) -o test_add_part test_add_part.o add_to_part_list.o \
+		parts.o $(CLIBFLAGS)
+
+add_to_part_list.o:	add_to_part_list.s
+	$(AS) --gstabs $< -o $@
+
+test_cmp_part:	test_cmp_part.o cmp_part.o parts.o
+	$(CC) $(CFLAGS) -o test_cmp_part test_cmp_part.o cmp_part.o \
+		parts.o $(CLIBFLAGS)
+
+cmp_part.o:	cmp_part.s
+	$(AS) --gstabs $< -o $@
+
+test_find_part:	test_find_part.o find_part.o parts.o
+	$(CC) $(CFLAGS) -o test_find_part test_find_part.o find_part.o \
+		parts.o $(CLIBFLAGS)
+
+find_part.o:	find_part.s
+	$(AS) --gstabs $< -o $@
+
+test_new_part:	test_new_part.o new_part.o parts.o
+	$(CC) $(CFLAGS) -o test_new_part test_new_part.o new_part.o \
+		parts.o $(CLIBFLAGS)
+
+new_part.o:	new_part.s
+	$(AS) --gstabs $< -o $@
+
+clean:
+	rm -f *.o test_add_part test_cmp_part test_find_part test_new_part \
+		test_add_cust test_cmp_cust test_find_cust test_new_cust

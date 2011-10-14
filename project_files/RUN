@@ -1,0 +1,41 @@
+#!/bin/sh
+#
+# run the project2 program for all test sets
+#
+# produces the following result files:
+#
+#       out.N           standard output from test #N
+#       err.N           standard error output from test #N
+#       max.N           MAX_MEMORY_USED file from test #n
+#
+# accepts an optional command-line argument; if supplied, it is used
+# as the limit on the amount of dynamic memory your program can use
+#
+# example, limiting dynamic memory to 1024 bytes:
+#
+#       ./RUN 1024
+
+if [ $# -gt 0 ]
+then
+	SPF_ALLOCATE_MAX=$1
+	export SPF_ALLOCATE_MAX
+fi
+
+rm -f MAX_MEMORY_USED
+
+n=1
+while [ -f input.$n ]
+do
+	rm -f max.$n out.$n err.$n
+	echo "./project2 custs.$n parts.$n < input.$n > out.$n 2> err.$n"
+	./project2 custs.$n parts.$n < input.$n > out.$n 2> err.$n
+	if [ -f MAX_MEMORY_USED ]
+	then
+		mv MAX_MEMORY_USED max.$n
+	else
+		echo 0 > max.$n
+	fi
+	cmp stdout.$n out.$n
+	cmp stderr.$n err.$n
+	n=`expr $n + 1`
+done

@@ -1,0 +1,34 @@
+These test drivers illustrate how you can test the individual functions
+for this project.  You can expand them with additional test cases, or
+use them as the basis for writing test programs for the other functions
+you must test.
+
+Copy the assembly language implementations you wish to test into this
+directory,
+
+Next, if your add_to_cust_list() and add_to_part_list() routines use your
+cmp_cust() and cmp_part(), use the Makefile.cmp:
+
+	cp Makefile.cmp Makefile
+
+Otherwise, use the no-cmp version:
+
+	cp Makefile.no-cmp Makefile
+
+To use the tests, run one of the following commands to compile the test
+programs:
+
+	make test_add_cust	compiles test of add_to_cust_list()
+	make test_cmp_cust	compiles test of cmp_cust()
+	make test_find_cust	compiles test of find_cust()
+	make test_new_cust	compiles test of new_cust()
+	make test_add_part	compiles test of add_to_part_list()
+	make test_cmp_part	compiles test of cmp_part()
+	make test_find_part	compiles test of find_part()
+	make test_new_part	compiles test of new_part()
+
+	make			compiles all test programs
+
+If you want to run them all:
+
+	make run		compiles and runs all test programs
