@@ -10,15 +10,17 @@
 new_cust:
     
     pushl   %ebp        # save the callers stack
-    movl    %esp, %ebp  # set the ebp to where the esp is (bottom of last stack frame)
+    movl    %esp, %ebp  # set the ebp to where the esp is 
+                        # (bottom of last stack frame)
+
 # Code here
 
-# (%ebp) -> old ebp value
-# 4(%ebp) -> return address
-# 8(%ebp) -> function param #1 -> name pointer
-# 12(%ebp) -> function param #2 -> cid1 character
-# 16(%ebp) -> function param #3 -> cid2 2 byte int
-# 20(%ebp) -> function param #4 -> limit 2 byte int
+    # (%ebp) -> old ebp value
+    # 4(%ebp) -> return address
+    # 8(%ebp) -> function param #1 -> name pointer
+    # 12(%ebp) -> function param #2 -> cid1 character
+    # 16(%ebp) -> function param #3 -> cid2 2 byte int
+    # 20(%ebp) -> function param #4 -> limit 2 byte int
     
     pushl   $20
     call    allocate 
@@ -30,7 +32,8 @@ new_cust:
     
     # cid1 - 18
     movl    12(%ebp), %edx
-    movb    %dl, 18(%eax)   # since its only a byte, move the contents from the lob  
+    movb    %dl, 18(%eax)   # since its only a byte, move the 
+                            # contents from the lower portion of the register  
     
     # cid2 - 16
     movl    16(%ebp), %edx
